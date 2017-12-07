@@ -1,0 +1,9 @@
+c:\users\iiny1\documents\visual studio 2017\Projects\BreakoutGame\BreakoutGame\bin\Debug\BreakoutGame.exe.config
+c:\users\iiny1\documents\visual studio 2017\Projects\BreakoutGame\BreakoutGame\bin\Debug\BreakoutGame.exe
+c:\users\iiny1\documents\visual studio 2017\Projects\BreakoutGame\BreakoutGame\bin\Debug\BreakoutGame.pdb
+c:\users\iiny1\documents\visual studio 2017\Projects\BreakoutGame\BreakoutGame\obj\Debug\BreakoutGame.csprojResolveAssemblyReference.cache
+c:\users\iiny1\documents\visual studio 2017\Projects\BreakoutGame\BreakoutGame\obj\Debug\BreakoutGame.Form1.resources
+c:\users\iiny1\documents\visual studio 2017\Projects\BreakoutGame\BreakoutGame\obj\Debug\BreakoutGame.Properties.Resources.resources
+c:\users\iiny1\documents\visual studio 2017\Projects\BreakoutGame\BreakoutGame\obj\Debug\BreakoutGame.csproj.GenerateResource.Cache
+c:\users\iiny1\documents\visual studio 2017\Projects\BreakoutGame\BreakoutGame\obj\Debug\BreakoutGame.exe
+c:\users\iiny1\documents\visual studio 2017\Projects\BreakoutGame\BreakoutGame\obj\Debug\BreakoutGame.pdb

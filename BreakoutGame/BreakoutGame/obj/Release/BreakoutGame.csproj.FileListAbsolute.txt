@@ -1,0 +1,19 @@
+c:\users\iiny1\documents\visual studio 2017\Projects\BreakoutGame\BreakoutGame\bin\Release\BreakoutGame.exe.config
+c:\users\iiny1\documents\visual studio 2017\Projects\BreakoutGame\BreakoutGame\bin\Release\BreakoutGame.exe
+c:\users\iiny1\documents\visual studio 2017\Projects\BreakoutGame\BreakoutGame\bin\Release\BreakoutGame.pdb
+c:\users\iiny1\documents\visual studio 2017\Projects\BreakoutGame\BreakoutGame\obj\Release\BreakoutGame.Form1.resources
+c:\users\iiny1\documents\visual studio 2017\Projects\BreakoutGame\BreakoutGame\obj\Release\BreakoutGame.Properties.Resources.resources
+c:\users\iiny1\documents\visual studio 2017\Projects\BreakoutGame\BreakoutGame\obj\Release\BreakoutGame.csproj.GenerateResource.Cache
+c:\users\iiny1\documents\visual studio 2017\Projects\BreakoutGame\BreakoutGame\obj\Release\BreakoutGame.exe
+c:\users\iiny1\documents\visual studio 2017\Projects\BreakoutGame\BreakoutGame\obj\Release\BreakoutGame.pdb
+c:\users\iiny1\documents\visual studio 2017\Projects\BreakoutGame\BreakoutGame\obj\Release\BreakoutGame.csprojResolveAssemblyReference.cache
+C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\bin\Release\BreakoutGame.exe.config
+C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\bin\Release\BreakoutGame.exe
+C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\bin\Release\BreakoutGame.pdb
+C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\obj\Release\BreakoutGame.csprojResolveAssemblyReference.cache
+C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\obj\Release\BreakoutGame.Form1.resources
+C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\obj\Release\BreakoutGame.Properties.Resources.resources
+C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\obj\Release\BreakoutGame.csproj.GenerateResource.Cache
+C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\obj\Release\BreakoutGame.exe
+C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\obj\Release\BreakoutGame.pdb
+C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\obj\Release\BreakoutGame.MainForm.resources
