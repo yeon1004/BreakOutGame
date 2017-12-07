@@ -16,5 +16,23 @@ namespace BreakoutGame
         {
             InitializeComponent();
         }
-    }
+
+        private void btnStage_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            new System.Threading.Thread(() =>
+            {
+                Application.Run(new SelectStage());
+            }).Start();
+        }
+
+        private void BtnChallenge_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            new System.Threading.Thread(() =>
+            {
+                Application.Run(new ChallengeMode());
+            }).Start();
+        }
+}
 }

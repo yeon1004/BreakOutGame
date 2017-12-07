@@ -26,8 +26,6 @@ namespace BreakoutGame
         int ballSize;
         int ball_x, ball_y;
         int barWidth, barHeight;
-        int barSpeed;
-        string mapId;
         Random random;
         int item1_on;
         int item2_on;
@@ -49,14 +47,30 @@ namespace BreakoutGame
             ball_x = ball_y = 4;                                    //공 속도
             barWidth = 150;                                         //바 가로 길이
             barHeight = 20;                                         //바 세로 길이
-            barSpeed = 20;                                          //바 움직이는 속도
             bar.Size = new Size(barWidth, barHeight);               //바 사이즈 설정
             bar.Left = this.ClientRectangle.Width / 2 - bar.Width;  //바 위치 가운데로
 
-            mapId = "14"; //맵 아이디(1~10)
+            //DrawMap();
+
+            random = new Random();
+
+            item1_on = 0;
+            item2_on = 0;
+            item3_on = 0;
+            item4_on = 0;
+
+            //타이머 시작
+            timer1.Start();
+            timer2.Start();
+            timer3.Start();
+        }
+
+        protected void DrawMap(string mapId)
+        {
+            //mapId = "14"; //맵 아이디(1~10)
 
             //맵 파일 읽어오기
-            FileStream file = new FileStream("map"+mapId+".txt", FileMode.Open, FileAccess.Read);
+            FileStream file = new FileStream("map" + mapId + ".txt", FileMode.Open, FileAccess.Read);
             StreamReader sr = new StreamReader(file);
 
             string map_data;
@@ -100,18 +114,6 @@ namespace BreakoutGame
             }
 
             sr.Close();
-
-            random = new Random();
-
-            item1_on = 0;
-            item2_on = 0;
-            item3_on = 0;
-            item4_on = 0;
-
-            //타이머 시작
-            timer1.Start();
-            timer2.Start();
-            timer3.Start();
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
@@ -138,6 +140,19 @@ namespace BreakoutGame
                 {
                     timer1.Stop();
                     MessageBox.Show("패배!");
+                    DialogResult result = MessageBox.Show("다시하시겠습니까?", "GameOver", MessageBoxButtons.YesNo);
+                    if (result == DialogResult.Yes)
+                    {
+                        this.Refresh();
+                    }
+                    else if (result == DialogResult.No)
+                    {
+                        this.Close();
+                        new System.Threading.Thread(() =>
+                        {
+                            Application.Run(new MainForm());
+                        }).Start();
+                    }
                     //ball_y = -ball_y; //게임 안끝남. 테스트용
                 }
                 else if ((ball.Left <= rc.Left || ball.Right >= rc.Right) || IsBumpedX(bar))
@@ -312,55 +327,54 @@ namespace BreakoutGame
             }
         }
 
-        private void Item1()
+        protected void Item1()
         {
             ball_x = ball_x * 3 / 2;
             ball_y = ball_y * 3 / 2;
             item1_on = 10;
         }
 
-        private void Item1_Remove()
+        protected void Item1_Remove()
         {
             ball_x = ball_x * 2 / 3;
             ball_y = ball_y * 2 / 3;
             item1_on = 0;
         }
 
-        private void Item2()
+        protected void Item2()
         {
             bar.Size = new Size(barWidth / 2, barHeight);
             item2_on = 10;
         }
 
-        private void Item2_Remove()
+        protected void Item2_Remove()
         {
             bar.Size = new Size(barWidth, barHeight);
             item2_on = 0;
         }
 
-        private void Item3()
+        protected void Item3()
         {
             bar.Size = new Size(barWidth * 2, barHeight);
             item3_on = 10;
         }
 
-        private void Item3_Remove()
+        protected void Item3_Remove()
         {
             bar.Size = new Size(barWidth, barHeight);
             item3_on = 0;
         }
-
-        private void Item4()
+        protected void Item4()
         {
             item4_on = 5;
         }
 
-        private void Item4_Remove()
+        protected void Item4_Remove()
         {
             item4_on = 0;
         }
 
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        protected void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             Rectangle rc = this.ClientRectangle;
             switch (e.KeyCode)
@@ -374,7 +388,7 @@ namespace BreakoutGame
             }
         }
 
-        private bool IsBumpedX(PictureBox pb)
+        protected bool IsBumpedX(PictureBox pb)
         {
             if((ball.Right >= pb.Left && ball.Left < pb.Right) 
                 || (ball.Left <= pb.Right && ball.Right > pb.Left))
@@ -387,7 +401,7 @@ namespace BreakoutGame
             return false;
         }
 
-        private bool IsBumpedY(PictureBox pb)
+        protected bool IsBumpedY(PictureBox pb)
         {
             if((ball.Top <= pb.Bottom && ball.Bottom > pb.Top)
                 || (ball.Bottom >= pb.Top && ball.Top < pb.Bottom))
@@ -400,7 +414,7 @@ namespace BreakoutGame
             return false;
         }
 
-        private bool IsBumpedX(TextBox pb)
+        protected bool IsBumpedX(TextBox pb)
         {
             if ((ball.Right >= pb.Left && ball.Left < pb.Right)
                 || (ball.Left <= pb.Right && ball.Right > pb.Left))
@@ -413,7 +427,7 @@ namespace BreakoutGame
             return false;
         }
 
-        private bool IsBumpedY(TextBox pb)
+        protected bool IsBumpedY(TextBox pb)
         {
             if ((ball.Top <= pb.Bottom && ball.Bottom > pb.Top)
                 || (ball.Bottom >= pb.Top && ball.Top < pb.Bottom))
@@ -426,7 +440,7 @@ namespace BreakoutGame
             return false;
         }
 
-        private bool IsBumpedX(Button pb)
+        protected bool IsBumpedX(Button pb)
         {
             if ((ball.Right >= pb.Left && ball.Left < pb.Right)
                 || (ball.Left <= pb.Right && ball.Right > pb.Left))
@@ -439,7 +453,7 @@ namespace BreakoutGame
             return false;
         }
 
-        private bool IsBumpedY(Button pb)
+        protected bool IsBumpedY(Button pb)
         {
             if ((ball.Top <= pb.Bottom && ball.Bottom > pb.Top)
                 || (ball.Bottom >= pb.Top && ball.Top < pb.Bottom))
@@ -452,12 +466,12 @@ namespace BreakoutGame
             return false;
         }
 
-        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        protected void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             
         }
 
-        private void timer2_Tick(object sender, EventArgs e)
+        protected void timer2_Tick(object sender, EventArgs e)
         {
             if(run)
             {
@@ -472,7 +486,7 @@ namespace BreakoutGame
             }
         }
 
-        private void timer3_Tick(object sender, EventArgs e)
+        protected void timer3_Tick(object sender, EventArgs e)
         {
             if(run)
             {
@@ -499,7 +513,7 @@ namespace BreakoutGame
             }
         }
 
-        private void Form1_MouseMove(object sender, MouseEventArgs e)
+        protected void Form1_MouseMove(object sender, MouseEventArgs e)
         {
             if(run)
             {
@@ -514,7 +528,7 @@ namespace BreakoutGame
                 base.OnNotifyMessage(m);
         }
 
-        private void ItemDrop(int left, int right, int bottom, int top)
+        protected void ItemDrop(int left, int right, int bottom, int top)
         {
             int itemSize = 20;
             int itemLeft = left + ((right - left) / 2) - (itemSize / 2);

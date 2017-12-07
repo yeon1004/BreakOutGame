@@ -7,3 +7,13 @@ c:\users\iiny1\documents\visual studio 2017\Projects\BreakoutGame\BreakoutGame\o
 c:\users\iiny1\documents\visual studio 2017\Projects\BreakoutGame\BreakoutGame\obj\Debug\BreakoutGame.csproj.GenerateResource.Cache
 c:\users\iiny1\documents\visual studio 2017\Projects\BreakoutGame\BreakoutGame\obj\Debug\BreakoutGame.exe
 c:\users\iiny1\documents\visual studio 2017\Projects\BreakoutGame\BreakoutGame\obj\Debug\BreakoutGame.pdb
+C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\bin\Debug\BreakoutGame.exe.config
+C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\bin\Debug\BreakoutGame.exe
+C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\bin\Debug\BreakoutGame.pdb
+C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\obj\Debug\BreakoutGame.csprojResolveAssemblyReference.cache
+C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\obj\Debug\BreakoutGame.Form1.resources
+C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\obj\Debug\BreakoutGame.MainForm.resources
+C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\obj\Debug\BreakoutGame.Properties.Resources.resources
+C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\obj\Debug\BreakoutGame.csproj.GenerateResource.Cache
+C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\obj\Debug\BreakoutGame.exe
+C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\obj\Debug\BreakoutGame.pdb
