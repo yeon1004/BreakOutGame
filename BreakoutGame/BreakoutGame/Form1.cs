@@ -21,16 +21,21 @@ namespace BreakoutGame
 {
     public partial class Form1 : Form
     {
-        bool run;
-        Rectangle ball;
-        int ballSize;
-        int ball_x, ball_y;
-        int barWidth, barHeight;
-        Random random;
-        int item1_on;
-        int item2_on;
-        int item3_on;
-        int item4_on;
+        protected bool run;
+        protected Rectangle ball;
+        protected int ballSize;
+        protected int ball_x, ball_y;
+        protected TextBox bar;
+        protected int barWidth, barHeight;
+        protected Random random;
+        protected int item1_on;
+        protected int item2_on;
+        protected int item3_on;
+        protected int item4_on;
+        
+        protected System.Windows.Forms.Timer gameTimer;
+        protected System.Windows.Forms.Timer itemTimer;
+        protected System.Windows.Forms.Timer itemConTimer;
 
         public Form1()
         {
@@ -45,6 +50,7 @@ namespace BreakoutGame
             ball.Offset(this.ClientRectangle.Width / 2, this.ClientRectangle.Height * 4 / 5);
 
             ball_x = ball_y = 4;                                    //공 속도
+            bar = txtBar;
             barWidth = 150;                                         //바 가로 길이
             barHeight = 20;                                         //바 세로 길이
             bar.Size = new Size(barWidth, barHeight);               //바 사이즈 설정
@@ -59,10 +65,26 @@ namespace BreakoutGame
             item3_on = 0;
             item4_on = 0;
 
+            System.Windows.Forms.Timer gameTimer = new System.Windows.Forms.Timer();
+            System.Windows.Forms.Timer itemTimer = new System.Windows.Forms.Timer();
+            System.Windows.Forms.Timer itemConTimer = new System.Windows.Forms.Timer();
+
+            gameTimer.Interval = 10;
+            itemTimer.Interval = 100;
+            itemConTimer.Interval = 1000;
+
+            gameTimer.Tick += timer1_Tick;
+            itemTimer.Tick += timer2_Tick;
+            itemConTimer.Tick += timer3_Tick;
+
+            //gameTimer.Start();
+            //itemTimer.Start();
+            //itemConTimer.Start();
+
             //타이머 시작
-            timer1.Start();
-            timer2.Start();
-            timer3.Start();
+            //timer1.Start();
+            //timer2.Start();
+            //timer3.Start();
         }
 
         protected void DrawMap(string mapId)
@@ -125,7 +147,7 @@ namespace BreakoutGame
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if(run)
+            if (run)
             {
                 Rectangle rc = this.ClientRectangle;
 
@@ -138,12 +160,16 @@ namespace BreakoutGame
                 //공 튕기기
                 if (ball.Bottom > rc.Bottom)
                 {
-                    timer1.Stop();
+                    gameTimer.Stop();
                     MessageBox.Show("패배!");
                     DialogResult result = MessageBox.Show("다시하시겠습니까?", "GameOver", MessageBoxButtons.YesNo);
                     if (result == DialogResult.Yes)
                     {
-                        this.Refresh();
+                        this.Close();
+                        new System.Threading.Thread(() =>
+                        {
+                            Application.Run(new Form1());
+                        }).Start();
                     }
                     else if (result == DialogResult.No)
                     {
@@ -383,6 +409,22 @@ namespace BreakoutGame
                     run = !run;
                     if(run) startMsg.Visible = false;
                     else startMsg.Visible = true;
+                    break;
+                case Keys.Escape:
+                    run = !run;
+                    DialogResult result = MessageBox.Show("나가시겠습니까?", "게임 종료", MessageBoxButtons.YesNo);
+                    if (result == DialogResult.Yes)
+                    {
+                        this.Close();
+                        new System.Threading.Thread(() =>
+                        {
+                            Application.Run(new MainForm());
+                        }).Start();
+                    }
+                    else if (result == DialogResult.No)
+                    {
+                        run = !run;
+                    }
                     break;
                 default: break;
             }

@@ -28,39 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.bar = new System.Windows.Forms.TextBox();
-            this.timer2 = new System.Windows.Forms.Timer(this.components);
-            this.timer3 = new System.Windows.Forms.Timer(this.components);
+            this.txtBar = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.startMsg = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // timer1
+            // txtBar
             // 
-            this.timer1.Interval = 10;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // bar
-            // 
-            this.bar.BackColor = System.Drawing.Color.White;
-            this.bar.Enabled = false;
-            this.bar.Font = new System.Drawing.Font("굴림", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.bar.Location = new System.Drawing.Point(3, 711);
-            this.bar.Name = "bar";
-            this.bar.ReadOnly = true;
-            this.bar.Size = new System.Drawing.Size(100, 20);
-            this.bar.TabIndex = 4;
-            // 
-            // timer2
-            // 
-            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
-            // 
-            // timer3
-            // 
-            this.timer3.Interval = 1000;
-            this.timer3.Tick += new System.EventHandler(this.timer3_Tick);
+            this.txtBar.BackColor = System.Drawing.Color.White;
+            this.txtBar.Enabled = false;
+            this.txtBar.Font = new System.Drawing.Font("굴림", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.txtBar.Location = new System.Drawing.Point(3, 711);
+            this.txtBar.Name = "txtBar";
+            this.txtBar.ReadOnly = true;
+            this.txtBar.Size = new System.Drawing.Size(100, 20);
+            this.txtBar.TabIndex = 4;
             // 
             // label1
             // 
@@ -90,7 +72,7 @@
             this.ClientSize = new System.Drawing.Size(539, 761);
             this.Controls.Add(this.startMsg);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.bar);
+            this.Controls.Add(this.txtBar);
             this.MaximumSize = new System.Drawing.Size(555, 800);
             this.MinimumSize = new System.Drawing.Size(555, 800);
             this.Name = "Form1";
@@ -106,13 +88,10 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.TextBox bar;
-        private System.Windows.Forms.Timer timer2;
-        private System.Windows.Forms.Timer timer3;
+        //private System.Windows.Forms.TextBox bar;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label startMsg;
+        private System.Windows.Forms.TextBox txtBar;
     }
 }
 

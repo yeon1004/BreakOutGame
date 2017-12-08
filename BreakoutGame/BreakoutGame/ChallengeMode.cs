@@ -104,5 +104,14 @@ namespace BreakoutGame
                 this.Controls.Add(block);
             }
         }
+
+        protected new void Reload()
+        {
+            this.Close();
+            new System.Threading.Thread(() =>
+            {
+                Application.Run(new ChallengeMode());
+            }).Start();
+        }
     }
 }
