@@ -77,8 +77,11 @@
             this.Controls.Add(this.btnStage);
             this.Controls.Add(this.title);
             this.ForeColor = System.Drawing.Color.White;
+            this.MaximumSize = new System.Drawing.Size(555, 800);
+            this.MinimumSize = new System.Drawing.Size(555, 800);
             this.Name = "MainForm";
             this.Text = "MainForm";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

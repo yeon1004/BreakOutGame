@@ -19,20 +19,36 @@ namespace BreakoutGame
 
         private void btnStage_Click(object sender, EventArgs e)
         {
+            // hide main form
+            this.Hide();
+
+            // show other form
+            SelectStage selectStage = new SelectStage();
+            selectStage.Location = this.Location;
+            selectStage.ShowDialog();
+
+            // close application
             this.Close();
-            new System.Threading.Thread(() =>
-            {
-                Application.Run(new SelectStage());
-            }).Start();
         }
 
         private void BtnChallenge_Click(object sender, EventArgs e)
         {
+            // hide main form
+            this.Hide();
+
+            // show other form
+            ChallengeMode challengeMode = new ChallengeMode();
+            ChallengeMode.formName = "ChallengeMode";
+            challengeMode.Location = this.Location;
+            challengeMode.ShowDialog();
+
+            // close application
             this.Close();
-            new System.Threading.Thread(() =>
-            {
-                Application.Run(new ChallengeMode());
-            }).Start();
         }
-}
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
+    }
 }

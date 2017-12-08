@@ -55,11 +55,17 @@ namespace BreakoutGame
                     break;
                 }
             }
+            StageMode.formName = "StageMode";
 
             new System.Threading.Thread(() =>
             {
                 Application.Run(new StageMode());
             }).Start();
+        }
+
+        private void SelectStage_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

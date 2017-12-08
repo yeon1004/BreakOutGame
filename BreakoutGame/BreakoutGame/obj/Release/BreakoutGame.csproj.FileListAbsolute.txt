@@ -19,3 +19,5 @@ C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\obj\Release\Brea
 C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\obj\Release\BreakoutGame.MainForm.resources
 C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\obj\Release\BreakoutGame.SelectStage.resources
 C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\obj\Release\BreakoutGame.ChallengeMode.resources
+C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\obj\Release\BreakoutGame.Rank.resources
+C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\obj\Release\BreakoutGame.StageMode.resources

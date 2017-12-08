@@ -17,3 +17,7 @@ C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\obj\Debug\Breako
 C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\obj\Debug\BreakoutGame.csproj.GenerateResource.Cache
 C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\obj\Debug\BreakoutGame.exe
 C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\obj\Debug\BreakoutGame.pdb
+C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\obj\Debug\BreakoutGame.ChallengeMode.resources
+C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\obj\Debug\BreakoutGame.SelectStage.resources
+C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\obj\Debug\BreakoutGame.Rank.resources
+C:\Users\iiny1\Documents\BreakOutGame\BreakoutGame\BreakoutGame\obj\Debug\BreakoutGame.StageMode.resources

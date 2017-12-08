@@ -103,7 +103,7 @@
         #endregion
         //private System.Windows.Forms.TextBox bar;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label startMsg;
+        protected System.Windows.Forms.Label startMsg;
         private System.Windows.Forms.TextBox txtBar;
         private System.Windows.Forms.Label itemState;
     }

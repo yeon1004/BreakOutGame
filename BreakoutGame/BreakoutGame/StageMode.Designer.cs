@@ -28,9 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // StageMode
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(539, 761);
+            this.Name = "StageMode";
             this.Text = "StageMode";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.StageMode_FormClosed);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion

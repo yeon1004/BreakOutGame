@@ -50,8 +50,11 @@
             this.ClientSize = new System.Drawing.Size(539, 761);
             this.Controls.Add(this.title);
             this.ForeColor = System.Drawing.SystemColors.Control;
+            this.MaximumSize = new System.Drawing.Size(555, 800);
+            this.MinimumSize = new System.Drawing.Size(555, 800);
             this.Name = "SelectStage";
             this.Text = "SelectStage";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SelectStage_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

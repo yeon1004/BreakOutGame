@@ -12,12 +12,15 @@ namespace BreakoutGame
 {
     public partial class StageMode : Form1
     {
-        public static string mapId;
         public StageMode()
         {
             InitializeComponent();
             DrawMap(mapId);
         }
-        
+
+        private void StageMode_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

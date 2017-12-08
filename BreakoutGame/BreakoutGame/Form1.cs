@@ -37,6 +37,9 @@ namespace BreakoutGame
         protected System.Windows.Forms.Timer itemTimer;
         protected System.Windows.Forms.Timer itemConTimer;
 
+        static public string formName = "Form1";
+        public static string mapId = "0";
+
         public Form1()
         {
             InitializeComponent();
@@ -45,7 +48,7 @@ namespace BreakoutGame
             run = false;
             startMsg.Left = this.ClientRectangle.Width / 2 - startMsg.Width / 2;
 
-            ballSize = 10;
+            ballSize = 13;
             ball = new Rectangle(0, 0, ballSize, ballSize);         //공 생성
             ball.Offset(this.ClientRectangle.Width / 2, this.ClientRectangle.Height * 4 / 5);
 
@@ -84,10 +87,9 @@ namespace BreakoutGame
 
         protected void DrawMap(string mapId)
         {
-            //mapId = "14"; //맵 아이디(1~10)
-
             //맵 파일 읽어오기
-            FileStream file = new FileStream("map" + mapId + ".txt", FileMode.Open, FileAccess.Read);
+            if (Convert.ToInt32(mapId) < 1) mapId = "1"; 
+            FileStream file = new FileStream("res/map" + mapId + ".txt", FileMode.Open, FileAccess.Read);
             StreamReader sr = new StreamReader(file);
 
             string map_data;
@@ -140,7 +142,7 @@ namespace BreakoutGame
             g.FillEllipse(new SolidBrush(Color.Yellow), ball);                  //공 색깔 Yellow
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        public void timer1_Tick(object sender, EventArgs e)
         {
             Rectangle rc = this.ClientRectangle;
 
@@ -155,34 +157,72 @@ namespace BreakoutGame
             {
                 gameTimer.Stop();
                 MessageBox.Show("패배!");
-                DialogResult result = MessageBox.Show("다시하시겠습니까?", "GameOver", MessageBoxButtons.YesNo);
-                if (result == DialogResult.Yes)
-                {
-                    this.Close();
-                    new System.Threading.Thread(() =>
-                    {
-                        Application.Run(new Form1());
-                    }).Start();
-                }
-                else if (result == DialogResult.No)
-                {
-                    this.Close();
-                    new System.Threading.Thread(() =>
-                    {
-                        Application.Run(new MainForm());
-                    }).Start();
-                }
-                //ball_y = -ball_y; //게임 안끝남. 테스트용
+
+                // hide main form
+                this.Hide();
+
+                // show other form
+                SelectStage selectStage = new SelectStage();
+                selectStage.ShowDialog();
+                selectStage.Location = this.Location;
+
+                // close application
+                this.Close();
             }
             else if ((ball.Left <= rc.Left || ball.Right >= rc.Right) || IsBumpedX(bar))
             {
                 ball_x = -ball_x;
             }
-            else if (ball.Top <= rc.Top || IsBumpedY(bar))
+            else if (ball.Top < rc.Top)
             {
                 ball_y = -ball_y;
             }
+            else if(IsBumpedY(bar)) //공 바에 튕길 때 각도 조절
+            {
+                int ballc = ball.Right - (ball.Width / 2);
+                switch((ballc - bar.Left) / (bar.Width / 8) + 1)
+                {
+                    case 1:
+                    case 2:
+                        if (ball_y < 0) ball_y = 2;
+                        else ball_y = -3;
+                        if (ball_x < 0) ball_x = -5;
+                        else if (ball_x > 0) ball_x = 5;
+                        break;
+                    case 7:
+                    case 8:
+                        if (ball_y > 0) ball_y = -2;
+                        else ball_y = 3;
+                        if (ball_x < 0) ball_x = -5;
+                        else if (ball_x > 0) ball_x = 5;
+                        break;
+                    case 3:
+                    case 6:
+                        if (ball_y < 0) ball_y = 3;
+                        else if (ball_y > 0) ball_y = -3;
+                        if (ball_x < 0) ball_x = -5;
+                        else if (ball_x > 0) ball_x = 5;
+                        break;
+                    case 4:
+                    case 5:
+                        if (ball_y < 0) ball_y = 4;
+                        else if (ball_y > 0) ball_y = -4;
+                        if (ball_x < 0) ball_x = -4;
+                        else if (ball_x > 0) ball_x = 4;
+                        break;
+                    default:
+                        ball_y = -ball_y;
+                        break;
+                }
+                //ball_y = -ball_y;
+                if(item1_on >= 0)
+                {
+                    ball_x = ball_x * 3 / 2;
+                    ball_y = ball_y * 3 / 2;
+                }
+            }
 
+            int blockNum = 0;
             if (item4_on >= 0)
             {
                 //벽돌 맞을 경우
@@ -190,6 +230,7 @@ namespace BreakoutGame
                 {
                     if (ctrl is PictureBox)
                     {
+                        blockNum++;
                         if (IsBumpedX((PictureBox)ctrl))
                         {
                             this.Controls.Remove(ctrl);
@@ -221,7 +262,7 @@ namespace BreakoutGame
                                     this.Controls.Remove(ctrl);
                                     if (item3_on < 0) Item3();
                                     break;
-                                case 4:     //공 많아짐
+                                case 4:     //공 무적
                                     this.Controls.Remove(ctrl);
                                     if (item4_on < 0) Item4();
                                     break;
@@ -239,6 +280,7 @@ namespace BreakoutGame
                 {
                     if (ctrl is PictureBox)
                     {
+                        blockNum++;
                         if (IsBumpedX((PictureBox)ctrl))
                         {
                             int iblockTag = Convert.ToInt32(ctrl.Tag.ToString());
@@ -322,7 +364,7 @@ namespace BreakoutGame
                                     this.Controls.Remove(ctrl);
                                     if (item3_on < 0) Item3();
                                     break;
-                                case 4:     //공 많아짐
+                                case 4:     //공 무적
                                     this.Controls.Remove(ctrl);
                                     if (item4_on < 0) Item4();
                                     break;
@@ -333,6 +375,7 @@ namespace BreakoutGame
                     }
                 }
             }
+            if (blockNum <= 0) GameClear();
 
             //최소 범위만 새로고침
             if (ocircle != ball)
@@ -345,40 +388,72 @@ namespace BreakoutGame
             }
         }
 
-        protected void GameOver()
+        protected void GameClear()
         {
+            if (!run) return;
             gameTimer.Stop();
-            MessageBox.Show("패배!");
-            DialogResult result = MessageBox.Show("다시하시겠습니까?", "GameOver", MessageBoxButtons.YesNo);
-            if (result == DialogResult.Yes)
+            itemTimer.Stop();
+            itemConTimer.Stop();
+            MessageBox.Show("스테이지 클리어!");
+            if(Convert.ToInt32(mapId) >= 15)
             {
+                MessageBox.Show("마지막 스테이지입니다!");
+                // hide main form
+                this.Hide();
+
+                // show other form
+                SelectStage selectStage = new SelectStage();
+                selectStage.Location = this.Location;
+                selectStage.ShowDialog();
+
+                // close application
                 this.Close();
-                new System.Threading.Thread(() =>
-                {
-                    Application.Run(new Form1());
-                }).Start();
             }
-            else if (result == DialogResult.No)
+            else
             {
-                this.Close();
-                new System.Threading.Thread(() =>
+                DialogResult result = MessageBox.Show("다음 스테이지로 넘어가시겠습니까?", "GameClear", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
                 {
-                    Application.Run(new MainForm());
-                }).Start();
+                    // hide main form
+                    this.Hide();
+
+                    // show other form
+                    StageMode stageMode = new StageMode();
+                    StageMode.formName = "StageMode";
+                    StageMode.mapId = (Convert.ToInt32(mapId) + 1).ToString();
+                    stageMode.Location = this.Location;
+                    stageMode.ShowDialog();
+
+                    // close application
+                    //this.Close();
+                }
+                else
+                {
+                    // hide main form
+                    this.Hide();
+
+                    // show other form
+                    SelectStage selectStage = new SelectStage();
+                    selectStage.Location = this.Location;
+                    selectStage.ShowDialog();
+
+                    // close application
+                    this.Close();
+                }
             }
         }
 
         protected void Item1()
         {
-            ball_x = ball_x * 3 / 2;
-            ball_y = ball_y * 3 / 2;
+            //ball_x = ball_x * 3 / 2;
+            //ball_y = ball_y * 3 / 2;
             item1_on = 10;
         }
 
         protected void Item1_Remove()
         {
-            ball_x = ball_x * 2 / 3;
-            ball_y = ball_y * 2 / 3;
+            //ball_x = ball_x * 2 / 3;
+            //ball_y = ball_y * 2 / 3;
             item1_on = -1;
         }
 
@@ -446,11 +521,16 @@ namespace BreakoutGame
                     DialogResult result = MessageBox.Show("나가시겠습니까?", "게임 종료", MessageBoxButtons.YesNo);
                     if (result == DialogResult.Yes)
                     {
+                        // hide main form
+                        this.Hide();
+
+                        // show other form
+                        MainForm stageMode = new MainForm();
+                        stageMode.Location = this.Location;
+                        stageMode.ShowDialog();
+
+                        // close application
                         this.Close();
-                        new System.Threading.Thread(() =>
-                        {
-                            Application.Run(new MainForm());
-                        }).Start();
                     }
                     else if (result == DialogResult.No)
                         run = !run;
@@ -557,7 +637,7 @@ namespace BreakoutGame
 
         protected void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-            
+            Application.Exit();
         }
 
         protected void timer2_Tick(object sender, EventArgs e)
@@ -664,7 +744,7 @@ namespace BreakoutGame
                     itemBtn.Tag = "3";
                     break;
                 case 4: //공 많아짐
-                    itemBtn.BackgroundImage = new Bitmap("res/item4_manyball.png");
+                    itemBtn.BackgroundImage = new Bitmap("res/item4_superball.png");
                     itemBtn.Tag = "4";
                     break;
                 case 5: //랜덤
