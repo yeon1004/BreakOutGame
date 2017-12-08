@@ -60,14 +60,14 @@ namespace BreakoutGame
 
             random = new Random();
 
-            item1_on = 0;
-            item2_on = 0;
-            item3_on = 0;
-            item4_on = 0;
+            item1_on = -1;
+            item2_on = -1;
+            item3_on = -1;
+            item4_on = -1;
 
-            System.Windows.Forms.Timer gameTimer = new System.Windows.Forms.Timer();
-            System.Windows.Forms.Timer itemTimer = new System.Windows.Forms.Timer();
-            System.Windows.Forms.Timer itemConTimer = new System.Windows.Forms.Timer();
+            gameTimer = new System.Windows.Forms.Timer();
+            itemTimer = new System.Windows.Forms.Timer();
+            itemConTimer = new System.Windows.Forms.Timer();
 
             gameTimer.Interval = 10;
             itemTimer.Interval = 100;
@@ -80,11 +80,6 @@ namespace BreakoutGame
             //gameTimer.Start();
             //itemTimer.Start();
             //itemConTimer.Start();
-
-            //타이머 시작
-            //timer1.Start();
-            //timer2.Start();
-            //timer3.Start();
         }
 
         protected void DrawMap(string mapId)
@@ -147,209 +142,229 @@ namespace BreakoutGame
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (run)
+            Rectangle rc = this.ClientRectangle;
+
+            //새로고침 범위 최소화하기 위한 ocircle
+            Rectangle ocircle = new Rectangle(ball.Location, ball.Size);
+
+            //볼 이동
+            ball.Offset(ball_x, ball_y);
+
+            //공 튕기기
+            if (ball.Bottom > rc.Bottom)
             {
-                Rectangle rc = this.ClientRectangle;
-
-                //새로고침 범위 최소화하기 위한 ocircle
-                Rectangle ocircle = new Rectangle(ball.Location, ball.Size);
-
-                //볼 이동
-                ball.Offset(ball_x, ball_y);
-
-                //공 튕기기
-                if (ball.Bottom > rc.Bottom)
+                gameTimer.Stop();
+                MessageBox.Show("패배!");
+                DialogResult result = MessageBox.Show("다시하시겠습니까?", "GameOver", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
                 {
-                    gameTimer.Stop();
-                    MessageBox.Show("패배!");
-                    DialogResult result = MessageBox.Show("다시하시겠습니까?", "GameOver", MessageBoxButtons.YesNo);
-                    if (result == DialogResult.Yes)
+                    this.Close();
+                    new System.Threading.Thread(() =>
                     {
-                        this.Close();
-                        new System.Threading.Thread(() =>
-                        {
-                            Application.Run(new Form1());
-                        }).Start();
-                    }
-                    else if (result == DialogResult.No)
+                        Application.Run(new Form1());
+                    }).Start();
+                }
+                else if (result == DialogResult.No)
+                {
+                    this.Close();
+                    new System.Threading.Thread(() =>
                     {
-                        this.Close();
-                        new System.Threading.Thread(() =>
-                        {
-                            Application.Run(new MainForm());
-                        }).Start();
-                    }
-                    //ball_y = -ball_y; //게임 안끝남. 테스트용
+                        Application.Run(new MainForm());
+                    }).Start();
                 }
-                else if ((ball.Left <= rc.Left || ball.Right >= rc.Right) || IsBumpedX(bar))
-                {
-                    ball_x = -ball_x;
-                }
-                else if (ball.Top <= rc.Top || IsBumpedY(bar))
-                {
-                    ball_y = -ball_y;
-                }
+                //ball_y = -ball_y; //게임 안끝남. 테스트용
+            }
+            else if ((ball.Left <= rc.Left || ball.Right >= rc.Right) || IsBumpedX(bar))
+            {
+                ball_x = -ball_x;
+            }
+            else if (ball.Top <= rc.Top || IsBumpedY(bar))
+            {
+                ball_y = -ball_y;
+            }
 
-                if (item4_on != 0)
+            if (item4_on >= 0)
+            {
+                //벽돌 맞을 경우
+                foreach (Control ctrl in this.Controls)
                 {
-                    //벽돌 맞을 경우
-                    foreach (Control ctrl in this.Controls)
+                    if (ctrl is PictureBox)
                     {
-                        if (ctrl is PictureBox)
+                        if (IsBumpedX((PictureBox)ctrl))
                         {
-                            if (IsBumpedX((PictureBox)ctrl))
-                            {
-                                this.Controls.Remove(ctrl);
-                                ItemDrop(ctrl.Left, ctrl.Right, ctrl.Bottom, ctrl.Top);
-                            }
-                            else if (IsBumpedY((PictureBox)ctrl))
-                            {
-                                this.Controls.Remove(ctrl);
-                                ItemDrop(ctrl.Left, ctrl.Right, ctrl.Bottom, ctrl.Top);
-                            }
+                            this.Controls.Remove(ctrl);
+                            ItemDrop(ctrl.Left, ctrl.Right, ctrl.Bottom, ctrl.Top);
                         }
-
-                        if (ctrl is Button)
+                        else if (IsBumpedY((PictureBox)ctrl))
                         {
-                            if (IsBumpedX((Button)ctrl) || IsBumpedY((Button)ctrl))
+                            this.Controls.Remove(ctrl);
+                            ItemDrop(ctrl.Left, ctrl.Right, ctrl.Bottom, ctrl.Top);
+                        }
+                    }
+
+                    if (ctrl is Button)
+                    {
+                        if (IsBumpedX((Button)ctrl) || IsBumpedY((Button)ctrl))
+                        {
+                            int itemId = Convert.ToInt32(ctrl.Tag.ToString());
+                            switch (itemId)
                             {
-                                int itemId = Convert.ToInt32(ctrl.Tag.ToString());
-                                switch (itemId)
-                                {
-                                    case 1:     //공 빨라짐
-                                        this.Controls.Remove(ctrl);
-                                        if (item1_on == 0) Item1();
-                                        break;
-                                    case 2:     //바 짧아짐
-                                        this.Controls.Remove(ctrl);
-                                        if (item2_on == 0) Item2();
-                                        break;
-                                    case 3:     //바 길어짐
-                                        this.Controls.Remove(ctrl);
-                                        if (item3_on == 0) Item3();
-                                        break;
-                                    case 4:     //공 많아짐
-                                        this.Controls.Remove(ctrl);
-                                        if (item4_on == 0) Item4();
-                                        break;
-                                    default:
-                                        break;
-                                }
+                                case 1:     //공 빨라짐
+                                    this.Controls.Remove(ctrl);
+                                    if (item1_on < 0) Item1();
+                                    break;
+                                case 2:     //바 짧아짐
+                                    this.Controls.Remove(ctrl);
+                                    if (item2_on < 0) Item2();
+                                    break;
+                                case 3:     //바 길어짐
+                                    this.Controls.Remove(ctrl);
+                                    if (item3_on < 0) Item3();
+                                    break;
+                                case 4:     //공 많아짐
+                                    this.Controls.Remove(ctrl);
+                                    if (item4_on < 0) Item4();
+                                    break;
+                                default:
+                                    break;
                             }
                         }
                     }
                 }
-                else
+            }
+            else
+            {
+                //벽돌 맞을 경우
+                foreach (Control ctrl in this.Controls)
                 {
-                    //벽돌 맞을 경우
-                    foreach (Control ctrl in this.Controls)
+                    if (ctrl is PictureBox)
                     {
-                        if (ctrl is PictureBox)
+                        if (IsBumpedX((PictureBox)ctrl))
                         {
-                            if (IsBumpedX((PictureBox)ctrl))
+                            int iblockTag = Convert.ToInt32(ctrl.Tag.ToString());
+                            switch (iblockTag)
                             {
-                                int iblockTag = Convert.ToInt32(ctrl.Tag.ToString());
-                                switch (iblockTag)
-                                {
-                                    case 1:      //일반 벽돌
-                                        ball_x = -ball_x;
-                                        this.Controls.Remove(ctrl);
-                                        ItemDrop(ctrl.Left, ctrl.Right, ctrl.Bottom, ctrl.Top);
-                                        break;
-                                    case 2:      //돌벽돌
-                                        ball_x = -ball_x;
-                                        ctrl.BackgroundImage = new Bitmap("res/block_stone2.png");
-                                        ctrl.Tag = "21";
-                                        break;
-                                    case 21:    //한번 맞았던 돌벽돌
-                                        ball_x = -ball_x;
-                                        this.Controls.Remove(ctrl);
-                                        ItemDrop(ctrl.Left, ctrl.Right, ctrl.Bottom, ctrl.Top);
-                                        break;
-                                    case 3:     //철벽돌
-                                        ball_x = -ball_x;
-                                        break;
-                                    case 4:      //유리 벽돌
-                                        this.Controls.Remove(ctrl);
-                                        ItemDrop(ctrl.Left, ctrl.Right, ctrl.Bottom, ctrl.Top);
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                            else if (IsBumpedY((PictureBox)ctrl))
-                            {
-                                int iblockTag = Convert.ToInt32(ctrl.Tag.ToString());
-                                switch (iblockTag)
-                                {
-                                    case 1:      //일반 벽돌
-                                        ball_y = -ball_y;
-                                        this.Controls.Remove(ctrl);
-                                        ItemDrop(ctrl.Left, ctrl.Right, ctrl.Bottom, ctrl.Top);
-                                        break;
-                                    case 2:      //돌벽돌
-                                        ball_y = -ball_y;
-                                        ctrl.BackgroundImage = new Bitmap("res/block_stone2.png");
-                                        ctrl.Tag = "21";
-                                        break;
-                                    case 21:    //한번 맞았던 돌벽돌
-                                        ball_y = -ball_y;
-                                        this.Controls.Remove(ctrl);
-                                        ItemDrop(ctrl.Left, ctrl.Right, ctrl.Bottom, ctrl.Top);
-                                        break;
-                                    case 3:     //철벽돌
-                                        ball_y = -ball_y;
-                                        break;
-                                    case 4:      //유리 벽돌
-                                        this.Controls.Remove(ctrl);
-                                        ItemDrop(ctrl.Left, ctrl.Right, ctrl.Bottom, ctrl.Top);
-                                        break;
-                                    default:
-                                        break;
-                                }
+                                case 1:      //일반 벽돌
+                                    ball_x = -ball_x;
+                                    this.Controls.Remove(ctrl);
+                                    ItemDrop(ctrl.Left, ctrl.Right, ctrl.Bottom, ctrl.Top);
+                                    break;
+                                case 2:      //돌벽돌
+                                    ball_x = -ball_x;
+                                    ctrl.BackgroundImage = new Bitmap("res/block_stone2.png");
+                                    ctrl.Tag = "21";
+                                    break;
+                                case 21:    //한번 맞았던 돌벽돌
+                                    ball_x = -ball_x;
+                                    this.Controls.Remove(ctrl);
+                                    ItemDrop(ctrl.Left, ctrl.Right, ctrl.Bottom, ctrl.Top);
+                                    break;
+                                case 3:     //철벽돌
+                                    ball_x = -ball_x;
+                                    break;
+                                case 4:      //유리 벽돌
+                                    this.Controls.Remove(ctrl);
+                                    ItemDrop(ctrl.Left, ctrl.Right, ctrl.Bottom, ctrl.Top);
+                                    break;
+                                default:
+                                    break;
                             }
                         }
-
-                        if (ctrl is Button)
+                        else if (IsBumpedY((PictureBox)ctrl))
                         {
-                            if (IsBumpedX((Button)ctrl) || IsBumpedY((Button)ctrl))
+                            int iblockTag = Convert.ToInt32(ctrl.Tag.ToString());
+                            switch (iblockTag)
                             {
-                                int itemId = Convert.ToInt32(ctrl.Tag.ToString());
-                                switch (itemId)
-                                {
-                                    case 1:     //공 빨라짐
-                                        this.Controls.Remove(ctrl);
-                                        if (item1_on == 0) Item1();
-                                        break;
-                                    case 2:     //바 짧아짐
-                                        this.Controls.Remove(ctrl);
-                                        if (item2_on == 0) Item2();
-                                        break;
-                                    case 3:     //바 길어짐
-                                        this.Controls.Remove(ctrl);
-                                        if (item3_on == 0) Item3();
-                                        break;
-                                    case 4:     //공 많아짐
-                                        this.Controls.Remove(ctrl);
-                                        if (item4_on == 0) Item4();
-                                        break;
-                                    default:
-                                        break;
-                                }
+                                case 1:      //일반 벽돌
+                                    ball_y = -ball_y;
+                                    this.Controls.Remove(ctrl);
+                                    ItemDrop(ctrl.Left, ctrl.Right, ctrl.Bottom, ctrl.Top);
+                                    break;
+                                case 2:      //돌벽돌
+                                    ball_y = -ball_y;
+                                    ctrl.BackgroundImage = new Bitmap("res/block_stone2.png");
+                                    ctrl.Tag = "21";
+                                    break;
+                                case 21:    //한번 맞았던 돌벽돌
+                                    ball_y = -ball_y;
+                                    this.Controls.Remove(ctrl);
+                                    ItemDrop(ctrl.Left, ctrl.Right, ctrl.Bottom, ctrl.Top);
+                                    break;
+                                case 3:     //철벽돌
+                                    ball_y = -ball_y;
+                                    break;
+                                case 4:      //유리 벽돌
+                                    this.Controls.Remove(ctrl);
+                                    ItemDrop(ctrl.Left, ctrl.Right, ctrl.Bottom, ctrl.Top);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+
+                    if (ctrl is Button)
+                    {
+                        if (IsBumpedX((Button)ctrl) || IsBumpedY((Button)ctrl))
+                        {
+                            int itemId = Convert.ToInt32(ctrl.Tag.ToString());
+                            switch (itemId)
+                            {
+                                case 1:     //공 빨라짐
+                                    this.Controls.Remove(ctrl);
+                                    if (item1_on < 0) Item1();
+                                    break;
+                                case 2:     //바 짧아짐
+                                    this.Controls.Remove(ctrl);
+                                    if (item2_on < 0) Item2();
+                                    break;
+                                case 3:     //바 길어짐
+                                    this.Controls.Remove(ctrl);
+                                    if (item3_on < 0) Item3();
+                                    break;
+                                case 4:     //공 많아짐
+                                    this.Controls.Remove(ctrl);
+                                    if (item4_on < 0) Item4();
+                                    break;
+                                default:
+                                    break;
                             }
                         }
                     }
                 }
+            }
 
-                //최소 범위만 새로고침
-                if (ocircle != ball)
+            //최소 범위만 새로고침
+            if (ocircle != ball)
+            {
+                int left = Math.Min(ocircle.Left, ball.Left);
+                int top = Math.Min(ocircle.Top, ball.Top);
+                int right = Math.Max(ocircle.Right, ball.Right);
+                int bottom = Math.Max(ocircle.Bottom, ball.Bottom);
+                this.Invalidate(new Rectangle(left, top, right - left + 1, bottom - top + 1));
+            }
+        }
+
+        protected void GameOver()
+        {
+            gameTimer.Stop();
+            MessageBox.Show("패배!");
+            DialogResult result = MessageBox.Show("다시하시겠습니까?", "GameOver", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                this.Close();
+                new System.Threading.Thread(() =>
                 {
-                    int left = Math.Min(ocircle.Left, ball.Left);
-                    int top = Math.Min(ocircle.Top, ball.Top);
-                    int right = Math.Max(ocircle.Right, ball.Right);
-                    int bottom = Math.Max(ocircle.Bottom, ball.Bottom);
-                    this.Invalidate(new Rectangle(left, top, right - left + 1, bottom - top + 1));
-                }
+                    Application.Run(new Form1());
+                }).Start();
+            }
+            else if (result == DialogResult.No)
+            {
+                this.Close();
+                new System.Threading.Thread(() =>
+                {
+                    Application.Run(new MainForm());
+                }).Start();
             }
         }
 
@@ -364,7 +379,7 @@ namespace BreakoutGame
         {
             ball_x = ball_x * 2 / 3;
             ball_y = ball_y * 2 / 3;
-            item1_on = 0;
+            item1_on = -1;
         }
 
         protected void Item2()
@@ -376,7 +391,7 @@ namespace BreakoutGame
         protected void Item2_Remove()
         {
             bar.Size = new Size(barWidth, barHeight);
-            item2_on = 0;
+            item2_on = -1;
         }
 
         protected void Item3()
@@ -388,7 +403,7 @@ namespace BreakoutGame
         protected void Item3_Remove()
         {
             bar.Size = new Size(barWidth, barHeight);
-            item3_on = 0;
+            item3_on = -1;
         }
         protected void Item4()
         {
@@ -397,7 +412,7 @@ namespace BreakoutGame
 
         protected void Item4_Remove()
         {
-            item4_on = 0;
+            item4_on = -1;
         }
 
         protected void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -407,8 +422,24 @@ namespace BreakoutGame
             {
                 case Keys.Space:
                     run = !run;
-                    if(run) startMsg.Visible = false;
-                    else startMsg.Visible = true;
+                    if (run)
+                    {
+                        startMsg.Visible = false;
+
+                        gameTimer.Start();
+                        itemTimer.Start();
+                        itemConTimer.Start();
+
+                        this.MouseMove += Form1_MouseMove;
+                    }
+                    else
+                    {
+                        gameTimer.Stop();
+                        itemTimer.Stop();
+                        itemConTimer.Stop();
+
+                        this.MouseMove -= Form1_MouseMove;
+                    }
                     break;
                 case Keys.Escape:
                     run = !run;
@@ -422,8 +453,24 @@ namespace BreakoutGame
                         }).Start();
                     }
                     else if (result == DialogResult.No)
-                    {
                         run = !run;
+                    if (run)
+                    {
+                        startMsg.Visible = false;
+
+                        gameTimer.Start();
+                        itemTimer.Start();
+                        itemConTimer.Start();
+
+                        this.MouseMove += Form1_MouseMove;
+                    }
+                    else
+                    {
+                        gameTimer.Stop();
+                        itemTimer.Stop();
+                        itemConTimer.Stop();
+
+                        this.MouseMove -= Form1_MouseMove;
                     }
                     break;
                 default: break;
@@ -532,25 +579,47 @@ namespace BreakoutGame
         {
             if(run)
             {
-                if (item1_on > 1) item1_on--;
-                else if (item1_on == 1)
+                if (item1_on == 0)
                 {
+                    itemState.Text = "";
                     Item1_Remove();
                 }
-                if (item2_on > 1) item2_on--;
-                else if (item2_on == 1)
+                if (item2_on == 0)
                 {
                     Item2_Remove();
                 }
-                if (item3_on > 1) item3_on--;
-                else if (item3_on == 1)
+                if (item3_on == 0)
                 {
                     Item3_Remove();
                 }
-                if (item4_on > 1) item4_on--;
-                else if (item4_on == 1)
+                if (item4_on == 0)
                 {
                     Item4_Remove();
+                }
+                //--------------------------
+                if (item1_on > 0)
+                {
+                    itemState.Text = "[ 공 빨라짐 (" + item1_on + ")]";
+                    item1_on--;
+                }
+                else
+                {
+                    itemState.Text = "";
+                }
+                if (item2_on > 0)
+                {
+                    itemState.Text = itemState.Text + "[ 바 짧아짐 (" + item2_on + ")]";
+                    item2_on--;
+                }
+                if (item3_on > 0)
+                {
+                    itemState.Text = itemState.Text + "[ 바 길어짐 (" + item3_on + ")]";
+                    item3_on--;
+                }
+                if (item4_on > 0)
+                {
+                    itemState.Text = itemState.Text + "[ 공 무적효과 (" + item4_on + ")]";
+                    item4_on--;
                 }
             }
         }

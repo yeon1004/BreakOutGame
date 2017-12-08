@@ -31,6 +31,7 @@
             this.txtBar = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.startMsg = new System.Windows.Forms.Label();
+            this.itemState = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtBar
@@ -64,12 +65,24 @@
             this.startMsg.TabIndex = 6;
             this.startMsg.Text = "Spase bar를 눌러 시작하세요.";
             // 
+            // itemState
+            // 
+            this.itemState.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.itemState.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.itemState.Location = new System.Drawing.Point(216, 747);
+            this.itemState.Name = "itemState";
+            this.itemState.Size = new System.Drawing.Size(320, 12);
+            this.itemState.TabIndex = 7;
+            this.itemState.Text = "\r\n";
+            this.itemState.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ClientSize = new System.Drawing.Size(539, 761);
+            this.Controls.Add(this.itemState);
             this.Controls.Add(this.startMsg);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtBar);
@@ -92,6 +105,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label startMsg;
         private System.Windows.Forms.TextBox txtBar;
+        private System.Windows.Forms.Label itemState;
     }
 }
 
