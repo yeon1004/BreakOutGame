@@ -158,16 +158,32 @@ namespace BreakoutGame
                 gameTimer.Stop();
                 MessageBox.Show("패배!");
 
-                // hide main form
-                this.Hide();
+                if(Form1.formName == "StageMode")
+                {
+                    // hide main form
+                    this.Hide();
 
-                // show other form
-                SelectStage selectStage = new SelectStage();
-                selectStage.ShowDialog();
-                selectStage.Location = this.Location;
+                    // show other form
+                    SelectStage selectStage = new SelectStage();
+                    selectStage.ShowDialog();
+                    selectStage.Location = this.Location;
 
-                // close application
-                this.Close();
+                    // close application
+                    this.Close();
+                }
+                else
+                {
+                    // hide main form
+                    this.Hide();
+
+                    // show other form
+                    ChallengeMode challengeMode = new ChallengeMode();
+                    challengeMode.ShowDialog();
+                    challengeMode.Location = this.Location;
+
+                    // close application
+                    this.Close();
+                }
             }
             else if ((ball.Left <= rc.Left || ball.Right >= rc.Right) || IsBumpedX(bar))
             {

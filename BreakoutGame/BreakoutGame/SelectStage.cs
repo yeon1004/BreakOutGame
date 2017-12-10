@@ -55,17 +55,36 @@ namespace BreakoutGame
                     break;
                 }
             }
-            StageMode.formName = "StageMode";
+            // hide main form
+            this.Hide();
 
-            new System.Threading.Thread(() =>
-            {
-                Application.Run(new StageMode());
-            }).Start();
+            // show other form
+            StageMode stageMode = new StageMode();
+            StageMode.formName = "StageMode";
+            stageMode.ShowDialog();
+            stageMode.Location = this.Location;
+
+            // close application
+            this.Close();
         }
 
         private void SelectStage_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // hide main form
+            this.Hide();
+
+            // show other form
+            MainForm mainForm = new MainForm();
+            mainForm.ShowDialog();
+            mainForm.Location = this.Location;
+
+            // close application
+            this.Close();
         }
     }
 }
