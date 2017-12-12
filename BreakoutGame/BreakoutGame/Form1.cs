@@ -9,10 +9,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using System.IO;
+using System.Media;
 /*
 * 창 사이즈 : 555*800
 * 블럭 패널 : 539*520
-* 블럭 : 77*52
+* 블럭 : 77*32
 * 바 : 100*15
 * 아이템 : 20*20
 * 볼 : 10*10
@@ -58,7 +59,7 @@ namespace BreakoutGame
             barHeight = 20;                                         //바 세로 길이
             bar.Size = new Size(barWidth, barHeight);               //바 사이즈 설정
             bar.Left = this.ClientRectangle.Width / 2 - bar.Width;  //바 위치 가운데로
-
+            
             //DrawMap();
 
             random = new Random();
@@ -80,9 +81,6 @@ namespace BreakoutGame
             itemTimer.Tick += timer2_Tick;
             itemConTimer.Tick += timer3_Tick;
 
-            //gameTimer.Start();
-            //itemTimer.Start();
-            //itemConTimer.Start();
         }
 
         protected void DrawMap(string mapId)
@@ -105,7 +103,23 @@ namespace BreakoutGame
                     switch (Convert.ToInt32(blocks[j]))
                     {
                         case 1:
-                            block.BackgroundImage = new Bitmap("res/block_basic.png");
+                            int blockid = random.Next(0, 4) + 1;
+                            switch(blockid)
+                            {
+                                case 1:
+                                    block.BackgroundImage = new Bitmap("res/block_basic.png");
+                                    break;
+                                case 2:
+                                    block.BackgroundImage = new Bitmap("res/block_color1.png");
+                                    break;
+                                case 3:
+                                    block.BackgroundImage = new Bitmap("res/block_color2.png");
+                                    break;
+                                case 4:
+                                    block.BackgroundImage = new Bitmap("res/block_color3.png");
+                                    break;
+                            }
+                            //block.BackgroundImage = new Bitmap("res/block_basic.png");
                             block.Tag = "1";
                             break;
                         case 2:
@@ -743,6 +757,7 @@ namespace BreakoutGame
 
             Button itemBtn = new Button();
             itemBtn.Enabled = false;
+            itemBtn.FlatStyle = FlatStyle.Flat;
             int itemNum = random.Next(0, 30) + 1; //1~N중 1~5일 때만 아이템 드롭
             //int itemNum = 1; //아이템 매번 발생(테스트용)
             switch(itemNum)

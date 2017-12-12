@@ -49,6 +49,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.ForeColor = System.Drawing.Color.DimGray;
             this.label1.Location = new System.Drawing.Point(3, 747);
             this.label1.Name = "label1";
@@ -59,6 +60,7 @@
             // startMsg
             // 
             this.startMsg.AutoSize = true;
+            this.startMsg.BackColor = System.Drawing.Color.Transparent;
             this.startMsg.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.startMsg.Location = new System.Drawing.Point(3, 628);
             this.startMsg.Name = "startMsg";
@@ -69,10 +71,11 @@
             // itemState
             // 
             this.itemState.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.itemState.BackColor = System.Drawing.Color.Transparent;
             this.itemState.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.itemState.Location = new System.Drawing.Point(216, 747);
+            this.itemState.Location = new System.Drawing.Point(207, 747);
             this.itemState.Name = "itemState";
-            this.itemState.Size = new System.Drawing.Size(320, 12);
+            this.itemState.Size = new System.Drawing.Size(329, 12);
             this.itemState.TabIndex = 7;
             this.itemState.Text = "\r\n";
             this.itemState.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -82,6 +85,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(539, 761);
             this.Controls.Add(this.itemState);
             this.Controls.Add(this.startMsg);

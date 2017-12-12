@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace BreakoutGame
 {
     public partial class ChallengeMode : Form1
@@ -44,7 +45,22 @@ namespace BreakoutGame
                         case 3:
                         case 4:
                         case 5:
-                            block.BackgroundImage = new Bitmap("res/block_basic.png");
+                            int blockid = random.Next(0, 4) + 1;
+                            switch (blockid)
+                            {
+                                case 1:
+                                    block.BackgroundImage = new Bitmap("res/block_basic.png");
+                                    break;
+                                case 2:
+                                    block.BackgroundImage = new Bitmap("res/block_color1.png");
+                                    break;
+                                case 3:
+                                    block.BackgroundImage = new Bitmap("res/block_color2.png");
+                                    break;
+                                case 4:
+                                    block.BackgroundImage = new Bitmap("res/block_color3.png");
+                                    break;
+                            }
                             block.Tag = "1";
                             break;
                         case 6:

@@ -24,8 +24,11 @@ namespace BreakoutGame
             { 
                 stageBtns[i] = new Button();
                 stageBtns[i].Text = (i+1).ToString();
-                stageBtns[i].BackColor = Color.White;
-                stageBtns[i].ForeColor = Color.Black;
+                stageBtns[i].BackColor = Color.FromArgb(20, 20, 20);
+                stageBtns[i].ForeColor = Color.White;
+                stageBtns[i].FlatStyle = FlatStyle.Flat;
+                stageBtns[i].FlatAppearance.BorderSize = 0; 
+                stageBtns[i].Font = new Font(new FontFamily("돋움"), 20, FontStyle.Bold);
                 stageBtns[i].Width = this.ClientRectangle.Width / 3;
                 stageBtns[i].Height = (this.ClientRectangle.Height * 3 / 4) / 5;
                 stageBtns[i].Margin = new Padding(0);

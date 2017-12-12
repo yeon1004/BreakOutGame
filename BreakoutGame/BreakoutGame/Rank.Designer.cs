@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Rank));
             this.dgvRank = new System.Windows.Forms.DataGridView();
             this.rankNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.userName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.userScore = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label1 = new System.Windows.Forms.Label();
             this.btnToMain = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRank)).BeginInit();
             this.SuspendLayout();
@@ -82,25 +82,16 @@
             this.userScore.ReadOnly = true;
             this.userScore.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("굴림", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label1.Location = new System.Drawing.Point(200, 87);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(135, 48);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Rank";
-            // 
             // btnToMain
             // 
-            this.btnToMain.Font = new System.Drawing.Font("굴림", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnToMain.BackgroundImage = global::BreakoutGame.Properties.Resources.main2;
+            this.btnToMain.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnToMain.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.btnToMain.ForeColor = System.Drawing.Color.Black;
             this.btnToMain.Location = new System.Drawing.Point(84, 665);
             this.btnToMain.Name = "btnToMain";
             this.btnToMain.Size = new System.Drawing.Size(365, 51);
             this.btnToMain.TabIndex = 2;
-            this.btnToMain.Text = "메인으로";
             this.btnToMain.UseVisualStyleBackColor = true;
             this.btnToMain.Click += new System.EventHandler(this.btnToMain_Click);
             // 
@@ -109,11 +100,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
+            this.BackgroundImage = global::BreakoutGame.Properties.Resources.rank;
             this.ClientSize = new System.Drawing.Size(539, 761);
             this.Controls.Add(this.btnToMain);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.dgvRank);
             this.ForeColor = System.Drawing.Color.White;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(555, 800);
             this.MinimumSize = new System.Drawing.Size(555, 800);
             this.Name = "Rank";
@@ -121,7 +113,6 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Rank_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.dgvRank)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -131,7 +122,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn rankNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn userName;
         private System.Windows.Forms.DataGridViewTextBoxColumn userScore;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnToMain;
     }
 }

@@ -30,6 +30,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
@@ -100,6 +103,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Rank.resx">
       <DependentUpon>Rank.cs</DependentUpon>
@@ -122,6 +126,22 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="favicon.ico" />
+    <Content Include="Properties\bgImage.jpg" />
+    <None Include="Resources\main2.jpg" />
+    <None Include="Resources\main1.jpg" />
+    <None Include="Resources\back.jpg" />
+    <None Include="Resources\main.jpg" />
+    <None Include="Resources\bg3.jpg" />
+    <None Include="Resources\bg2.jpg" />
+    <None Include="Resources\challenge.jpg" />
+    <None Include="Resources\button.jpg" />
+    <None Include="Resources\button11.jpg" />
+    <None Include="Resources\button1.jpg" />
+    <None Include="Resources\rank.jpg" />
+    <None Include="Resources\bgImage.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
